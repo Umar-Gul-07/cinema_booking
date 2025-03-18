@@ -9,9 +9,9 @@ from .settings import MEDIA_ROOT, STATIC_ROOT
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="ECOMMERCE BUSINESS API",
+        title="CINEMA BOOKING API's",
         default_version="v1",
-        description="API's for React application of Ecommerce Business website",
+        description="API's for React application of Cinema Booking website",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="support@zaalasociety.com"),
         license=openapi.License(name="BSD License"),
@@ -22,6 +22,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
 ]
 
 urlpatterns += [

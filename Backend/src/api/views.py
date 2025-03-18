@@ -1,6 +1,6 @@
 from rest_framework import generics
-from movies.models import Category, Movie
-from movies.serializers import CategorySerializer, MovieSerializer
+from ..services.movies.models import Category, Movie
+from .serializers import CategorySerializer, MovieSerializer
 
 # List Categories (Events)
 class CategoryListView(generics.ListAPIView):

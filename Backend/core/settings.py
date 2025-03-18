@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +43,15 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'drf_yasg',
+    
+    # Allauth dependencies
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # REST Framework for API Authentication
+    'rest_framework',
+    'allauth.socialaccount.providers.google', \
 
     # CUSTOM APPLICATIONS
     'src.api',
@@ -59,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -70,7 +81,23 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'core.urls'
 
-SITE_ID = 1
+# Required for allauth
+SITE_ID = 1  
+
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# User Model (if using a custom one)
+AUTH_USER_MODEL = 'auth.User'
+
+# Configure Allauth
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Can be 'username' or 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Options: 'mandatory', 'optional', 'none'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [

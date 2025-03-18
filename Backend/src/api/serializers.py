@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from movies.models import Category, Movie, Screen, Seat, Showtime
-from bookings.models import Booking, Payment, Review
+from ..services.movies.models import Category, Movie, Screen, Seat, Showtime
+from ..services.bookings.models import Booking, Payment, Review
 
 # Movies App Serializers
 class CategorySerializer(serializers.ModelSerializer):

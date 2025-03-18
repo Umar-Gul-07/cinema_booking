@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from ..movies.models import Showtime,Seat,Movie
 
 User = get_user_model()
 
