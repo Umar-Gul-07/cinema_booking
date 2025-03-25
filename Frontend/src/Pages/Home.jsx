@@ -1,584 +1,2663 @@
-import {Helmet} from "react-helmet";
-import {Link} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import api from "../Utils/Axios";
-import {toast} from "react-toastify";
-import Product from "./include/Product";
+import React from 'react'
+import { Helmet } from 'react-helmet'
 
-function Home() {
-    const [blogs, setBlogs] = useState([])
-    const [featuredProducts, setFeaturedProducts] = useState([])
-    const [topProducts, setTopProducts] = useState([])
-
-    const products_list = async () => {
-        try {
-            const result = await api.get('products-list/');
-            const allProducts = result.data;
-
-            const featuredProducts = allProducts.filter(product => product.featured_product === true);
-            setFeaturedProducts(featuredProducts.slice(0, 4));
-
-            const topProducts = allProducts
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-            setTopProducts(topProducts.slice(0, 4));
-        } catch (error) {
-        }
-    };
-
-    const blogs_list = async () => {
-        try {
-            const result = await api.get('blogs-list/');
-            setBlogs(result.data.slice(0, 3));
-        } catch (error) {
-
-        }
-    };
-
-    useEffect(() => {
-        blogs_list();
-        products_list()
-    }, []);
-
+const Home = ({title}) => {
     return (
-        <>
-            <Helmet>
-                <title>Home</title>
-            </Helmet>
-
-            <section className="bd-banner__area dark-bg banner-height-2 d-flex align-items-center p-relative fix">
-                <div className="bd-banner__shape-1">
-                    <img src="img/product/alo7.png" alt="banner-shape"/>
-                </div>
-                <div className="bd-banner__discount-shape">
-                    <img
-                        src="assets/img/banner/discount-shape.png"
-                        alt="discount-shape"
-                    />
-                    <div className="discount-text">
-                        <span>50%</span>off
-                    </div>
-                </div>
+        <div>
+            <Helmet><title>{title}</title></Helmet>
+            <section className="banner-section">
+                <div
+                    className="banner-bg bg_img bg-fixed"
+                    data-background="./assets/images/banner/banner01.jpg"
+                    style={{ backgroundImage: 'url("./assets/images/banner/banner01.jpg")' }}
+                />
                 <div className="container">
-                    <div className="row align-items-center">
-                        <div className="bd-singel__banner mt-70 d-flex align-items-center">
-                            <div className="col-xl-7 col-lg-6 col-md-6 col-12">
-                                <div className="bd-banner__content__wrapper p-relative">
-                                    <div className="bd-banner__text-shape mb-10">
-                                        <img
-                                            src="assets/img/banner/banner-shape-2.png"
-                                            alt="banner-shape"
-                                        />
-                                    </div>
-                                    <div className="bd-banner__btn-shape">
-                                        <img
-                                            src="assets/img/banner/curved-arrow.png"
-                                            alt="curved-arrow"
-                                        />
-                                    </div>
-                                    <div className="bd-banner__content-2">
-                                        <h2>
-                                            Aloe Vera <br/> Honey
-                                        </h2>
-                                        <p>
-                                            <b> Discover organic aloe vera and </b> <br/>{" "}
-                                            <b>pure honey from our farm</b>{" "}
-                                        </p>
-                                        <div className="bd-banner__btn">
-                                            <Link className="bd-bn__btn-1" to="/shop">
-                                                Shop Now
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-xl-5 col-lg-6 col-md-6">
-                                <div className="bd-banner__thumb">
-                                    <img src="img/product/alo1.webp" alt="banner-3.png"/>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="banner-content">
+                        <h1 className="title  cd-headline clip">
+                            <span className="d-block">book your</span> tickets for
+                            <span
+                                className="color-theme cd-words-wrapper p-0 m-0"
+                                style={{ width: "271.875px" }}
+                            >
+                                <b className="is-hidden">Movie</b>
+                                <b className="is-hidden">Event</b>
+                                <b className="is-visible">Sport</b>
+                            </span>
+                        </h1>
+                        <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>
                     </div>
                 </div>
             </section>
 
-            <section className="bd-step__area pt-130 pb-65">
+
+
+            <section className="search-ticket-section padding-top pt-lg-0">
                 <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-xl-6 col-lg-7 col-md-8">
-                            <div className="bd-section__title-wrapper p-relative mb-85">
-                                <div className="bd-section__img w-img">
-                                    <img src="assets/img/step/title-img.png" alt="title-img"/>
-                                </div>
-                                <span className="bd-step__title">and pure products</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 d-flex align-items-center">
-                            <div className="bd-step__item text-center p-relative mb-60">
-                                <div className="bd-step__arrow mb-3">
-                                    <img
-                                        src="assets/img/step/step-arrow-1.png"
-                                        alt="step-arrow"
-                                    />
-                                </div>
-                                <div className="bd-step__icon mb-3">
-                                    <img
-                                        style={{width: "40%", height: "auto"}}
-                                        src="img/product/alol1.avif"
-                                        alt="step-icon"
-                                    />
-                                </div>
-                                <div className="bd-step__content">
-                                    <h3>
-                                        <Link to="about">What is Aloe Vera? </Link>
-                                    </h3>
-                                    <p>
-                                        Aloe vera is a succulent plant known for its soothing,
-                                        healing gel, commonly used for skin care and medicinal
-                                        purposes
-                                    </p>
+                    <div
+                        className="search-tab bg_img"
+                        data-background="./assets/images/ticket/ticket-bg01.jpg"
+                        style={{
+                            backgroundImage: 'url("./assets/images/ticket/ticket-bg01.jpg")'
+                        }}
+                    >
+                        <div className="row align-items-center mb--20">
+                            <div className="col-lg-6 mb-20">
+                                <div className="search-ticket-header">
+                                    <h6 className="category">welcome to Boleto </h6>
+                                    <h3 className="title">what are you looking for</h3>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 d-flex align-items-center">
-                            <div className="bd-step__item text-center p-relative mb-60">
-                                <div className="bd-step__arrow mb-3">
-                                    <img
-                                        src="assets/img/step/step-arrow-2.png"
-                                        alt="step-arrow"
-                                    />
-                                </div>
-                                <div className="bd-step__icon mb-3">
-                                    <img
-                                        style={{width: "40%", height: "auto"}}
-                                        src="img/product/alol2.avif"
-                                        alt="step-icon"
-                                    />
-                                </div>
-                                <div className="bd-step__content">
-                                    <h3>
-                                        <Link to="about">Skin Care Benefits </Link>
-                                    </h3>
-                                    <p>
-                                        Aloe vera moisturizes, soothes, heals, and reduces acne and
-                                        aging signs on the skin
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 d-flex align-items-center">
-                            <div className="bd-step__item text-center p-relative mb-60">
-                                <div className="bd-step__arrow mb-3">
-                                    <img
-                                        src="assets/img/step/step-arrow-1.png"
-                                        alt="step-arrow"
-                                    />
-                                </div>
-                                <div className="bd-step__icon mb-3">
-                                    <img
-                                        style={{width: "40%", height: "auto"}}
-                                        src="img/product/alol4.jpg"
-                                        alt="step-icon"
-                                    />
-                                </div>
-                                <div className="bd-step__content">
-                                    <h3>
-                                        <Link to="about">Honey</Link>
-                                    </h3>
-                                    <p>
-                                        Honey is a natural sweetener with antimicrobial properties
-                                        that moisturizes, heals wounds, and soothes skin irritations
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-xl-3 col-lg-3 col-md-6 col-sm-6 d-flex align-items-center">
-                            <div className="bd-step__item text-center p-relative mb-60">
-                                <div className="bd-step__icon mb-3">
-                                    <img
-                                        style={{width: "40%", height: "auto"}}
-                                        src="img/product/alol3.jpg"
-                                        alt="step-icon"
-                                    />
-                                </div>
-                                <div className="bd-step__content">
-                                    <h3>
-                                        <Link to="about">Aloe Vera With Honey</Link>
-                                    </h3>
-                                    <p>
-                                        Aloe vera with honey combines soothing, moisturizing, and
-                                        healing properties, enhancing skin hydration and promoting
-                                        faster wound recovery
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bd-product__area pt-125 pb-95">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-xl-5 col-lg-5">
-                            <div className="bd-section__title-wrapper mb-60">
-                                <span className="bd-sub__title">Organic Products</span>
-                                <h2 className="bd-section__title mb-30">Top Products</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xxl-12">
-                            <div className="tab-content" id="nav-tabContent">
-                                <div
-                                    className="tab-pane fade show active"
-                                    id="nav-product-1"
-                                    role="tabpanel"
-                                    aria-labelledby="nav-product-1-tab"
-                                >
-                                    <div className="row">
-                                        <div className="col-12">
-                                            {topProducts.length > 0 ?
-                                                topProducts.map((object) => (
-                                                    <div className="col-4">
-                                                        <Product product={object}/>
-                                                    </div>
-                                                )) : <div className="text-center">
-                                                    <span style={{fontSize: "20px"}} className='badge text-danger'>No Products Found</span>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="bd-about__area grey-bg p-relative z-index-1 pt-130 pb-70">
-                <div className="container">
-                    <div className="bd-about__bg-wrapper p-relative">
-                        <img
-                            className="bd-about__bg-shape "
-                            src="assets/img/about/about-big-shape.png"
-                            alt="about-big-shape"
-                        />
-                    </div>
-                    <div className="row align-items-center">
-                        <div className="col-xl-6 col-lg-6">
-                            <div className="bd-about__content-wrapper mb-60">
-                                <div className="bd-section__title-wrapper mb-35">
-                                    <span className="bd-sub__title">About Us</span>
-                                    <h2 className="bd-section__title mb-35">
-                                        We believe in pure and organic quality
-                                    </h2>
-                                    <p>
-                                        We had reached a great height in skincare, for the aloe vera
-                                        gel was a smooth, calming balm, and the honey had ceased to
-                                        be just a sweetener. By the same soothing effect that
-                                        combines aloe’s moisture with honey’s healing, our skin felt
-                                        rejuvenated and refreshed.
-                                    </p>
-                                </div>
-                                <div className="bd-about__content">
-                                    <div className="bd-about__features">
-                                        <div className="bd-adbout__icon">
+                            <div className="col-lg-6 mb-20">
+                                <ul className="tab-menu ticket-tab-menu">
+                                    <li className="active">
+                                        <div className="tab-thumb">
                                             <img
-                                                src="assets/img/about/about-icon.png"
-                                                alt="about-icon"
+                                                src="./assets/images/ticket/ticket-tab01.png"
+                                                alt="ticket"
                                             />
                                         </div>
-                                        <div className="bd-about__text">
-                                            <h4>100% Healthy Quality</h4>
-                                            <p>
-                                                The skin had ceased to feel irritated. By the same
-                                                soothing effect that blends aloe vera's calm with
-                                                honey's healing, our skincare routine reached a new
-                                                level of comfort.
-                                            </p>
+                                        <span>movie</span>
+                                    </li>
+                                    <li>
+                                        <div className="tab-thumb">
+                                            <img
+                                                src="./assets/images/ticket/ticket-tab02.png"
+                                                alt="ticket"
+                                            />
+                                        </div>
+                                        <span>events</span>
+                                    </li>
+                                    <li>
+                                        <div className="tab-thumb">
+                                            <img
+                                                src="./assets/images/ticket/ticket-tab03.png"
+                                                alt="ticket"
+                                            />
+                                        </div>
+                                        <span>sports</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="tab-area">
+                            <div className="tab-item active">
+                                <form className="ticket-search-form">
+                                    <div className="form-group large">
+                                        <input type="text" placeholder="Search fo Movies" />
+                                        <button type="submit">
+                                            <i className="fas fa-search" />
+                                        </button>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/city.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">city</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="london">London</option>
+                                            <option value="dhaka">dhaka</option>
+                                            <option value="rosario">rosario</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="koltaka">kolkata</option>
+                                            <option value="rome">rome</option>
+                                            <option value="khoksa">khoksa</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">London</span>
+                                            <ul className="list">
+                                                <li data-value="london" className="option selected">
+                                                    London
+                                                </li>
+                                                <li data-value="dhaka" className="option">
+                                                    dhaka
+                                                </li>
+                                                <li data-value="rosario" className="option">
+                                                    rosario
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="koltaka" className="option">
+                                                    kolkata
+                                                </li>
+                                                <li data-value="rome" className="option">
+                                                    rome
+                                                </li>
+                                                <li data-value="khoksa" className="option">
+                                                    khoksa
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div className="bd-about__action">
-                                        <Link className="bd-bn__btn-1" to="about">
-                                            About Us
-                                        </Link>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/date.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">date</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="26-12-19">23/10/2019</option>
+                                            <option value="26-12-19">24/10/2019</option>
+                                            <option value="26-12-19">25/10/2019</option>
+                                            <option value="26-12-19">26/10/2019</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">23/10/2019</span>
+                                            <ul className="list">
+                                                <li data-value="26-12-19" className="option selected">
+                                                    23/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    24/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    25/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    26/10/2019
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/cinema.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">cinema</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="Awaken">Awaken</option>
+                                            <option value="dhaka">dhaka</option>
+                                            <option value="rosario">rosario</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="koltaka">kolkata</option>
+                                            <option value="rome">rome</option>
+                                            <option value="khoksa">khoksa</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">Awaken</span>
+                                            <ul className="list">
+                                                <li data-value="Awaken" className="option selected">
+                                                    Awaken
+                                                </li>
+                                                <li data-value="dhaka" className="option">
+                                                    dhaka
+                                                </li>
+                                                <li data-value="rosario" className="option">
+                                                    rosario
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="koltaka" className="option">
+                                                    kolkata
+                                                </li>
+                                                <li data-value="rome" className="option">
+                                                    rome
+                                                </li>
+                                                <li data-value="khoksa" className="option">
+                                                    khoksa
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </div>
-                        <div className="col-xl-6 col-lg-6">
-                            <div className="bd-about__thumb-wrapper p-relative mb-60 ">
-                                <div className="bd-about__thumb-1 w-img">
-                                    <img src="assets/img/about/about-img-1.jpg" alt="about-img"/>
-                                </div>
-                                <div className="bd-about__thumb-2">
-                                    <img src="assets/img/about/about-img-2.jpg" alt="about-img"/>
-                                </div>
-                                <div className="bd-about__quite-box">
-                                    <div className="quite-content">
-                                        <p>
-                                            "Organic products are very helpful to our human skin care"
-                                        </p>
+                            <div className="tab-item">
+                                <form className="ticket-search-form">
+                                    <div className="form-group large">
+                                        <input type="text" placeholder="Search fo Events" />
+                                        <button type="submit">
+                                            <i className="fas fa-search" />
+                                        </button>
                                     </div>
-                                    <div className="quite-icon">
-                                        <i className="flaticon-quote"/>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/city.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">city</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="london">London</option>
+                                            <option value="dhaka">dhaka</option>
+                                            <option value="rosario">rosario</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="koltaka">kolkata</option>
+                                            <option value="rome">rome</option>
+                                            <option value="khoksa">khoksa</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">London</span>
+                                            <ul className="list">
+                                                <li data-value="london" className="option selected">
+                                                    London
+                                                </li>
+                                                <li data-value="dhaka" className="option">
+                                                    dhaka
+                                                </li>
+                                                <li data-value="rosario" className="option">
+                                                    rosario
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="koltaka" className="option">
+                                                    kolkata
+                                                </li>
+                                                <li data-value="rome" className="option">
+                                                    rome
+                                                </li>
+                                                <li data-value="khoksa" className="option">
+                                                    khoksa
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div className="bd-about__quite-name">
-                                        <span>Daniel Nirob</span>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/date.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">date</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="26-12-19">23/10/2019</option>
+                                            <option value="26-12-19">24/10/2019</option>
+                                            <option value="26-12-19">25/10/2019</option>
+                                            <option value="26-12-19">26/10/2019</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">23/10/2019</span>
+                                            <ul className="list">
+                                                <li data-value="26-12-19" className="option selected">
+                                                    23/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    24/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    25/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    26/10/2019
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="bd-about__shape-1">
-                                    <img
-                                        src="assets/img/about/about-shape-1.png"
-                                        alt="about-shape"
-                                    />
-                                </div>
-                                <div className="bd-about__shape-2"/>
-                                <div className="bd-about__shape-3"/>
-                                <div className="bd-about__shape-4"/>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/cinema.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">event</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="angular">angular</option>
+                                            <option value="startup">startup</option>
+                                            <option value="rosario">rosario</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="koltaka">kolkata</option>
+                                            <option value="Last-First">Last-First</option>
+                                            <option value="wish">wish</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">angular</span>
+                                            <ul className="list">
+                                                <li data-value="angular" className="option selected">
+                                                    angular
+                                                </li>
+                                                <li data-value="startup" className="option">
+                                                    startup
+                                                </li>
+                                                <li data-value="rosario" className="option">
+                                                    rosario
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="koltaka" className="option">
+                                                    kolkata
+                                                </li>
+                                                <li data-value="Last-First" className="option">
+                                                    Last-First
+                                                </li>
+                                                <li data-value="wish" className="option">
+                                                    wish
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="tab-item">
+                                <form className="ticket-search-form">
+                                    <div className="form-group large">
+                                        <input type="text" placeholder="Search fo Sports" />
+                                        <button type="submit">
+                                            <i className="fas fa-search" />
+                                        </button>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/city.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">city</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="london">London</option>
+                                            <option value="dhaka">dhaka</option>
+                                            <option value="rosario">rosario</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="koltaka">kolkata</option>
+                                            <option value="rome">rome</option>
+                                            <option value="khoksa">khoksa</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">London</span>
+                                            <ul className="list">
+                                                <li data-value="london" className="option selected">
+                                                    London
+                                                </li>
+                                                <li data-value="dhaka" className="option">
+                                                    dhaka
+                                                </li>
+                                                <li data-value="rosario" className="option">
+                                                    rosario
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="koltaka" className="option">
+                                                    kolkata
+                                                </li>
+                                                <li data-value="rome" className="option">
+                                                    rome
+                                                </li>
+                                                <li data-value="khoksa" className="option">
+                                                    khoksa
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/date.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">date</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="26-12-19">23/10/2019</option>
+                                            <option value="26-12-19">24/10/2019</option>
+                                            <option value="26-12-19">25/10/2019</option>
+                                            <option value="26-12-19">26/10/2019</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">23/10/2019</span>
+                                            <ul className="list">
+                                                <li data-value="26-12-19" className="option selected">
+                                                    23/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    24/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    25/10/2019
+                                                </li>
+                                                <li data-value="26-12-19" className="option">
+                                                    26/10/2019
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="form-group">
+                                        <div className="thumb">
+                                            <img src="./assets/images/ticket/cinema.png" alt="ticket" />
+                                        </div>
+                                        <span className="type">sports</span>
+                                        <select className="select-bar" style={{ display: "none" }}>
+                                            <option value="football">football</option>
+                                            <option value="cricket">cricket</option>
+                                            <option value="cabadi">cabadi</option>
+                                            <option value="madrid">madrid</option>
+                                            <option value="gadon">gadon</option>
+                                            <option value="rome">rome</option>
+                                            <option value="khoksa">khoksa</option>
+                                        </select>
+                                        <div className="nice-select select-bar" tabIndex={0}>
+                                            <span className="current">football</span>
+                                            <ul className="list">
+                                                <li data-value="football" className="option selected">
+                                                    football
+                                                </li>
+                                                <li data-value="cricket" className="option">
+                                                    cricket
+                                                </li>
+                                                <li data-value="cabadi" className="option">
+                                                    cabadi
+                                                </li>
+                                                <li data-value="madrid" className="option">
+                                                    madrid
+                                                </li>
+                                                <li data-value="gadon" className="option">
+                                                    gadon
+                                                </li>
+                                                <li data-value="rome" className="option">
+                                                    rome
+                                                </li>
+                                                <li data-value="khoksa" className="option">
+                                                    khoksa
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="bd-product__area pt-125 pb-95">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-xl-5 col-lg-5">
-                            <div className="bd-section__title-wrapper mb-60">
-                                <span className="bd-sub__title">Organic</span>
-                                <h2 className="bd-section__title mb-30">Featured Products</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-xxl-12">
-                            <div className="tab-content" id="nav-tabContent">
-                                <div
-                                    className="tab-pane fade show active"
-                                    id="nav-product-1"
-                                    role="tabpanel"
-                                    aria-labelledby="nav-product-1-tab"
-                                >
-                                    <div className="row">
-                                        {featuredProducts.length > 0 ?
-                                            featuredProducts.map((object) => (
-                                                <div className="col-4">
-                                                    <Product product={object}/>
-                                                </div>
-                                            )) : <div className="text-center">
-                                                <span style={{fontSize: "20px"}} className='badge text-danger'>No Featured Products Found</span>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section className="bd-why-choose__area WHITE-bg-2 pt-125 pb-195">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="bd-section__title-wrapper text-center mb-60">
-                                <span className="bd-sub__title">Why Choose Us</span>
-                                <h2 className="bd-section__title mb-30">
-                                    6 reasons to Choose us
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row g-0 align-items-center">
-                        <div className="col-xl-4 col-lg-4 col-md-6">
-                            <div className="bd-choose__wrapper choose-wrapper__left mb-60">
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__content text-end">
-                                        <h4>100% Organic</h4>
-                                        <p>
-                                            Aloe vera and honey are both organic treasures, offering
-                                            natural, soothing benefits for skin care
-                                        </p>
-                                    </div>
-                                    <div className="bd-choose__icon choose-icon__left">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-01.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__content text-end">
-                                        <h4>Neat &amp; Clean</h4>
-                                        <p>
-                                            Aloe vera and honey are both naturally pure, providing
-                                            clean and gentle care for your skin realization
-                                        </p>
-                                    </div>
-                                    <div className="bd-choose__icon choose-icon__left">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-02.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__content text-end">
-                                        <h4>No Preservation</h4>
-                                        <p>
-                                            Aloe vera and honey are naturally preserved, maintaining
-                                            their purity and effectiveness without synthetic additives
-                                        </p>
-                                    </div>
-                                    <div className="bd-choose__icon choose-icon__left">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-03.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-4 col-lg-4 col-md-6">
-                            <div className="bd-choose__thumb text-center w-img mb-30">
-                                <img
-                                    style={{height: "400px", width: "auto", maxWidth: "100%"}}
-                                    src="img/product/alop5.jpeg"
-                                    alt="choose-big"
-                                />
-                            </div>
-                        </div>
-                        <div className="col-xl-4 col-lg-4 col-md-6">
-                            <div className="bd-choose__wrapper choose-wrapper__right mb-60">
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__icon choose__icon-right">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-04.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                    <div className="bd-choose__content text-start">
-                                        <h4>Quality</h4>
-                                        <p>
-                                            We offer you the finest quality of pure aloe vera and
-                                            honey, ensuring exceptional and luxurious skin care
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__icon choose__icon-right">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-05.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                    <div className="bd-choose__content text-start">
-                                        <h4>Trendy Design</h4>
-                                        <p>
-                                            We present you with premium aloe vera and honey in a chic,
-                                            trendy design, ensuring luxurious and effective skin care
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="bd-choose__item">
-                                    <div className="bd-choose__icon choose__icon-right">
-                                        <img
-                                            src="assets/img/why-choose/why-choose-06.png"
-                                            alt="why-choose-img"
-                                        />
-                                    </div>
-                                    <div className="bd-choose__content text-start">
-                                        <h4>Fast Delivery</h4>
-                                        <p>
-                                            We ensure fast delivery of our premium aloe vera and
-                                            honey, bringing you luxurious skin care quickly and
-                                            efficiently
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <section className="bd-news__area pt-125 pb-60">
+
+
+            <section className="movie-section padding-top padding-bottom">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="bd-section__title-wrapper text-center mb-60">
-                                <span className="bd-sub__title">Blogs Insight</span>
-                                <h2 className="bd-section__title mb-30">Recent Blogs</h2>
+                    <div className="tab">
+                        <div className="section-header-2">
+                            <div className="left">
+                                <h2 className="title">movies</h2>
+                                <p>Be sure not to miss these Movies today.</p>
                             </div>
+                            <ul className="tab-menu">
+                                <li className="active">now showing</li>
+                                <li>coming soon</li>
+                                <li>exclusive</li>
+                            </ul>
                         </div>
-                    </div>
-                    <div className="row">
-                        {blogs.length > 0 ? (
-                            blogs.map((object) => (
-                                <div className="col-xl-4 col-lg-4 col-md-6" key={object.id}>
-                                    <div className="bd-news__item mb-40">
-                                        <div className="bd-news__thumb w-img">
-                                            <Link to={{
-                                                pathname: `/blogs-details/${object.slug}`,
+                        <div className="tab-area mb-30-none">
+                            <div className="tab-item active">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(-2047px, 0px, 0px)",
+                                                transition: "0.25s",
+                                                width: 3510
                                             }}
-                                                  state={{blog: object}}>
-                                                <img
-                                                    src={object.image}
-                                                    alt="news-image"
-                                                />
-                                            </Link>
-                                        </div>
-                                        <div className="bd-news__content">
-                                            <div className="bd-news__meta-list">
-                                                <div className="bd-news__meta-item">
-                                                    <Link to="news.html">
-                                                        <i className="fa-light fa-folder-open"/>
-                                                        {object.category}
-                                                    </Link>
-                                                </div>
-                                                <div className="bd-news__meta-item">
-                                                    <span>
-                                                        <i className="fa-regular fa-clock"/>
-                                                        {object.created_at}
-                                                    </span>
+                                        >
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie01.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">alone</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="bd-news__title">
-                                                <h3>
-                                                    <Link to="/blogs-details">
-                                                        {object.title}
-                                                    </Link>
-                                                </h3>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie02.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">mars</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <Link className="bd-news__btn" to="/blogs-details">
-                                                Read More
-                                                <span>
-                                                    <i className="fa-solid fa-arrow-left"/>
-                                                    <i className="fa-solid fa-arrow-left"/>
-                                                </span>
-                                            </Link>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie03.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">venus</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie04.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">horror night</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie01.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">alone</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie02.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">mars</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie03.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">venus</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie04.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">horror night</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie01.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">alone</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie02.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">mars</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie03.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">venus</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie04.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">horror night</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
                                 </div>
-                            ))
-                        ) : (
-                            <div className="text-center">
-                                <span style={{fontSize: "20px"}} className='badge text-danger'>No blogs Found</span>
                             </div>
-                        )}
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie01.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">alone</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie02.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">mars</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie03.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">venus</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie04.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">horror night</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie01.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">alone</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie02.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">mars</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie03.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">venus</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="movie-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/movie/movie04.jpg"
+                                                                    alt="movie"
+                                                                />
+                                                            </a>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">horror night</a>
+                                                            </h5>
+                                                            <ul className="movie-rating-percent">
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/tomato.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                                <li>
+                                                                    <div className="thumb">
+                                                                        <img
+                                                                            src="./assets/images/movie/cake.png"
+                                                                            alt="movie"
+                                                                        />
+                                                                    </div>
+                                                                    <span className="content">88%</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
             </section>
-        </>
-    );
+
+
+
+            <section className="event-section padding-top padding-bottom bg-four">
+                <div className="container">
+                    <div className="tab">
+                        <div className="section-header-2">
+                            <div className="left">
+                                <h2 className="title">events</h2>
+                                <p>Be sure not to miss these Event today.</p>
+                            </div>
+                            <ul className="tab-menu">
+                                <li className="active">now showing</li>
+                                <li>coming soon</li>
+                                <li>exclusive</li>
+                            </ul>
+                        </div>
+                        <div className="tab-area mb-30-none">
+                            <div className="tab-item active">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(-1170px, 0px, 0px)",
+                                                transition: "0.25s",
+                                                width: 3510
+                                            }}
+                                        >
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event01.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">Digital Economy Conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event02.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">web design conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event03.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">digital thinkers meetup</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event04.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world digital conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event01.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">Digital Economy Conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event02.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">web design conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event03.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">digital thinkers meetup</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event04.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world digital conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event01.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">Digital Economy Conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event02.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">web design conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event03.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">digital thinkers meetup</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event04.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world digital conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event01.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">Digital Economy Conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event02.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">web design conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event03.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">digital thinkers meetup</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event04.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world digital conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event01.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">Digital Economy Conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event02.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">web design conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event03.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">digital thinkers meetup</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="event-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/event/event04.jpg"
+                                                                    alt="event"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world digital conference 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+            <section className="sports-section padding-top padding-bottom">
+                <div className="container">
+                    <div className="tab">
+                        <div className="section-header-2">
+                            <div className="left">
+                                <h2 className="title">sports</h2>
+                                <p>Be sure not to miss these Sports today.</p>
+                            </div>
+                            <ul className="tab-menu">
+                                <li className="active">now showing</li>
+                                <li>coming soon</li>
+                                <li>exclusive</li>
+                            </ul>
+                        </div>
+                        <div className="tab-area mb-30-none">
+                            <div className="tab-item active">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(-1755px, 0px, 0px)",
+                                                transition: "0.25s",
+                                                width: 3510
+                                            }}
+                                        >
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports01.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">football league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports02.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world cricket league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports03.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">basket ball league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports04.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world badminton league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports01.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">football league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports02.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world cricket league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports03.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">basket ball league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports04.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world badminton league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports01.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">football league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned active"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports02.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world cricket league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports03.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">basket ball league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className="owl-item cloned"
+                                                style={{ width: "262.5px", marginRight: 30 }}
+                                            >
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports04.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world badminton league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports01.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">football league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports02.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world cricket league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports03.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">basket ball league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports04.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world badminton league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                            <div className="tab-item">
+                                <div className="owl-carousel owl-theme tab-slider owl-loaded owl-drag">
+                                    <div className="owl-stage-outer">
+                                        <div
+                                            className="owl-stage"
+                                            style={{
+                                                transform: "translate3d(0px, 0px, 0px)",
+                                                transition: "all"
+                                            }}
+                                        >
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports01.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">football league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports02.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world cricket league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports03.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">basket ball league tournament</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="owl-item">
+                                                <div className="item">
+                                                    <div className="sports-grid">
+                                                        <div className="movie-thumb c-thumb">
+                                                            <a href="#0">
+                                                                <img
+                                                                    src="./assets/images/sports/sports04.jpg"
+                                                                    alt="sports"
+                                                                />
+                                                            </a>
+                                                            <div className="event-date">
+                                                                <h6 className="date-title">28</h6>
+                                                                <span>Dec</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="movie-content bg-one">
+                                                            <h5 className="title m-0">
+                                                                <a href="#0">world badminton league 2020</a>
+                                                            </h5>
+                                                            <div className="movie-rating-percent">
+                                                                <span>327 Montague Street</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="owl-nav disabled">
+                                        <button type="button" role="presentation" className="owl-prev">
+                                            <span aria-label="Previous">‹</span>
+                                        </button>
+                                        <button type="button" role="presentation" className="owl-next">
+                                            <span aria-label="Next">›</span>
+                                        </button>
+                                    </div>
+                                    <div className="owl-dots disabled" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    )
 }
 
-export default Home;
+export default Home

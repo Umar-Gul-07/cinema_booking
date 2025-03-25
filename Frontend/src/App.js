@@ -3,17 +3,17 @@ import PageNotFound404 from "./Errors/PageNotFound404";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Base from "./Pages/Base";
 import Home from "./Pages/Home";
-import Shop from "./Pages/Shop";
-import Blogs from "./Pages/Blogs";
+import Movies from "./Pages/Movies";
+import MovieDetails from "./Pages/MovieDetails";
+import TicketPlan from "./Pages/TicketPlan";
+import SeatPlan from "./Pages/SeatPlan";
+import MovieCheckout from "./Pages/MovieCheckout";
 import About from "./Pages/About";
+import Blogs from "./Pages/Blogs";
 import Contact from "./Pages/Contact";
-import Catagories from "./Pages/include/Catagories";
-import BlogsDetails from "./Pages/BlogsDetails";
-import Checkout from "./Pages/include/Checkout";
-import ProductDetails from "./Pages/include/ProductDetails";
-import AddToCart from "./Pages/include/AddToCart";
-import Gallery from "./Pages/Gallery";
-import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
+import SignIn from "./Pages/SignIn";
+ 
 
 
 function App() {
@@ -28,25 +28,33 @@ function App() {
                 <Routes>
 
                     {/* Web Routes */}
-                    <Route path='/' element={<Base><Home/></Base>}/>
+                    <Route path='/' element={<Base><Home title={"Home"}/></Base>}/>
                     <Route path='*' element={<PageNotFound404/>}/>
 
-                    <Route path="/shop" element={<Base> <Shop title={"Shop"}/> </Base>}/>
-                    <Route path="/blogs" element={<Base> <Blogs title={"Blogs"}/> </Base>}/>
+                 <Route path="/movie" element={<Base> <Movies title={"Movies"}/> </Base>}/>
+                 <Route path="/movie-details" element={<Base> <MovieDetails title={"Movie-Details"}/> </Base>}/>
+                 <Route path="/ticket-plan" element={<Base> <TicketPlan title={"Ticket-Plan"}/> </Base>}/>
+                 <Route path="/seat-plan" element={<Base> <SeatPlan title={"Seat-Plan"}/> </Base>}/>
+                 <Route path="/movie-checkout" element={<Base> <MovieCheckout title={"Movie-Checkout"}/> </Base>}/>
+
+                 <Route path="/about-us" element={<Base> <About title={"About Us"}/> </Base>}/>
+                 <Route path="/blogs" element={<Base> <Blogs title={"Blogs"}/> </Base>}/>
+                 <Route path="/contact-us" element={<Base> <Contact title={"Contact Us"}/> </Base>}/>
+                 <Route path="/sign-up" element={<Base> <SignUp title={"Sign-Up"}/> </Base>}/>
+                 <Route path="/sign-in" element={<Base> <SignIn title={"Sign-In"}/> </Base>}/>
+
+
+
+
+
+
+
+
+                    {/* <Route path="/blogs" element={<Base> <Blogs title={"Blogs"}/> </Base>}/>
                     <Route path="/blogs-details/:slug"
-                           element={<Base> <BlogsDetails title={"Blogs Details"}/> </Base>}/>
+                           element={<Base> <BlogsDetails title={"Blogs Details"}/> </Base>}/> */}
 
-                    <Route path="/about" element={<Base> <About title={"About Us"}/> </Base>}/>
-                    <Route path="/contact" element={<Base> <Contact title={"Contact Us"}/> </Base>}/>
-                    <Route path="/gallery" element={<Base> <Gallery title={"Gallery"}/> </Base>}/>
-                    <Route path="/catagories" element={<Base> <Catagories/> </Base>}/>
-
-                    <Route path="/product-details/:slug"
-                           element={<Base> <ProductDetails title={"Product Details"}/> </Base>}/>
-                    <Route path="/add-to-cart" element={<Base> <AddToCart title={"Cart"}/> </Base>}/>
-                    <Route path="/checkout" element={<Base> <Checkout title={"Checkout"}/> </Base>}/>
-
-                    <Route path="/login" element={<Base> <Login /> </Base>}/>
+    
 
                 </Routes>
 
