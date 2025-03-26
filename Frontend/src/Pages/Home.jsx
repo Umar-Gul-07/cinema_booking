@@ -21,7 +21,6 @@ const Home = ({title}) => {
                             >
                                 <b className="is-hidden">Movie</b>
                                 <b className="is-hidden">Event</b>
-                                <b className="is-visible">Sport</b>
                             </span>
                         </h1>
                         <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p>

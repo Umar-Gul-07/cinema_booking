@@ -8,6 +8,7 @@ class Movie(models.Model):
     release_date = models.DateField()
     languages = models.CharField(max_length=255)  # Example: "English, Hindi, Spanish"
     formats = models.CharField(max_length=100)  # Example: "2D, 3D, IMAX"
+    type = models.CharField(max_length=100)  # Example: "Horror , Adventure"
     background_image = models.ImageField(upload_to="movies/backgrounds/")
     trailer_url = models.URLField(blank=True, null=True)
 
