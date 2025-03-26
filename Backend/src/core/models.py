@@ -87,18 +87,43 @@ class Application(models.Model):
             raise ValidationError("Only one record allowed.")
         super(Application, self).save(*args, **kwargs)
 
+class ContactMessage(models.Model):
+    """
+    Model to store contact form messages.
+    """
+    SUBJECT_CHOICES = [
+        ('general', 'General Inquiry'),
+        ('support', 'Customer Support'),
+        ('feedback', 'Feedback'),
+        ('order', 'Order Issue'),
+        ('other', 'Other'),
+    ]
 
-class ContactForm(models.Model):
-    fullname = models.CharField(max_length=50, help_text="Full Name")
-    subject = models.CharField(max_length=100, help_text="Message Subject")
-    message = models.TextField(max_length=1000, help_text="Your Message")
-    email = models.EmailField(max_length=100, help_text="Your Email Address")
-    phone = PhoneNumberField(help_text="Your Contact Number")
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.CharField(max_length=50, choices=SUBJECT_CHOICES, default='general')
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.fullname
+        return f"{self.name} - {self.subject}"
 
 
 class GalleryForm(models.Model):
     image = models.ImageField(upload_to='gallery/images', null=True, blank=True, help_text='Gallery Images')
 
+
+
+class Branch(models.Model):
+    """
+    Stores details about different branches.
+    """
+    name = models.CharField(max_length=255, unique=True)
+    address = models.TextField()
+    phone = models.CharField(max_length=20, unique=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
+    status = models.CharField(max_length=10, choices=[('Open', 'Open'), ('Closed', 'Closed')], default='Closed')
+    image = models.ImageField(upload_to='branch_images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name

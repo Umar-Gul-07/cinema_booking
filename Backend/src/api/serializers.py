@@ -1,57 +1,80 @@
 from rest_framework import serializers
-from ..services.movies.models import Category, Movie, Screen, Seat, Showtime
-from ..services.bookings.models import Booking, Payment, Review
+from ..services.movies.models import (
+    Movie, MovieImage, Cast, Crew,
+    Cinema, Screen, Seat, ShowTime,
+    Event, Booking
+)
 
-# Movies App Serializers
-class CategorySerializer(serializers.ModelSerializer):
+# MOVIE SERIALIZERS
+class MovieImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = '__all__'
+        model = MovieImage
+        fields = ["id", "image"]
+
+class CastSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cast
+        fields = ["id", "name", "role"]
+
+class CrewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crew
+        fields = ["id", "name", "position"]
 
 class MovieSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
-    
+    images = MovieImageSerializer(many=True, read_only=True)
+    cast = CastSerializer(many=True, read_only=True)
+    crew = CrewSerializer(many=True, read_only=True)
+
     class Meta:
         model = Movie
-        fields = '__all__'
+        fields = ["id", "title", "synopsis", "release_date", "duration",
+                  "languages", "formats","background_image", "images", "cast", "crew"]
 
+# CINEMA & SCREEN SERIALIZERS
 class ScreenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screen
-        fields = '__all__'
+        fields = ["id", "screen_number", "capacity"]
 
+class CinemaSerializer(serializers.ModelSerializer):
+    screens = ScreenSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Cinema
+        fields = ["id", "name", "location", "total_screens", "screens"]
+
+# SEAT SERIALIZER
 class SeatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Seat
-        fields = '__all__'
+        fields = ["id", "seat_number", "is_vip"]
 
-class ShowtimeSerializer(serializers.ModelSerializer):
+# SHOWTIME SERIALIZER
+class ShowTimeSerializer(serializers.ModelSerializer):
     movie = MovieSerializer(read_only=True)
     screen = ScreenSerializer(read_only=True)
-    
-    class Meta:
-        model = Showtime
-        fields = '__all__'
 
-# Bookings App Serializers
+    class Meta:
+        model = ShowTime
+        fields = ["id", "movie", "screen", "date", "time", "price"]
+
+# EVENT SERIALIZER
+class EventSerializer(serializers.ModelSerializer):
+    movie = MovieSerializer(read_only=True)
+    cinema = CinemaSerializer(read_only=True)
+
+    class Meta:
+        model = Event
+        fields = ["id", "name", "movie", "cinema", "date", "time", "ticket_price"]
+
+# BOOKING SERIALIZER
 class BookingSerializer(serializers.ModelSerializer):
-    showtime = ShowtimeSerializer(read_only=True)
-    seat = SeatSerializer(read_only=True)
-    
+    showtime = ShowTimeSerializer(read_only=True)
+    event = EventSerializer(read_only=True)
+    seats = SeatSerializer(many=True, read_only=True)
+
     class Meta:
         model = Booking
-        fields = '__all__'
-
-class PaymentSerializer(serializers.ModelSerializer):
-    booking = BookingSerializer(read_only=True)
-    
-    class Meta:
-        model = Payment
-        fields = '__all__'
-
-class ReviewSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(read_only=True)
-    
-    class Meta:
-        model = Review
-        fields = '__all__'
+        fields = ["id", "customer_name", "customer_email", "showtime",
+                  "event", "seats", "total_price", "status", "booking_date"]

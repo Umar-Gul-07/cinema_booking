@@ -51,13 +51,11 @@ INSTALLED_APPS = [
 
     # REST Framework for API Authentication
     'rest_framework',
-    'allauth.socialaccount.providers.google', \
 
     # CUSTOM APPLICATIONS
     'src.api',
     'src.core',
     'src.services.movies',
-    'src.services.bookings',
 ]
 
 MIDDLEWARE = [
@@ -93,11 +91,11 @@ AUTHENTICATION_BACKENDS = [
 # User Model (if using a custom one)
 AUTH_USER_MODEL = 'auth.User'
 
-# Configure Allauth
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Can be 'username' or 'email'
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Options: 'mandatory', 'optional', 'none'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [

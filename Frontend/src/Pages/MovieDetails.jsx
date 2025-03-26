@@ -1,7 +1,15 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import { useLocation } from 'react-router-dom';
 
 const MovieDetails = ({ title }) => {
+  const location = useLocation();
+  const movie = location.state?.movie; // Ensure movie exists
+
+  if (!movie) {
+    return <h1>No Movie Data Available</h1>;
+  }
+  console.log(movie)
   return (
     <div>
 
@@ -24,12 +32,10 @@ const MovieDetails = ({ title }) => {
               </a>
             </div>
             <div className="details-banner-content offset-lg-3">
-              <h3 className="title">Venus</h3>
+              <h3 className="title">{movie.title}</h3>
               <div className="tags">
-                <a href="#0">English</a>
-                <a href="#0">Hindi</a>
-                <a href="#0">Telegu</a>
-                <a href="#0">Tamil</a>
+                <a href="#0">{movie.languages}</a>
+          
               </div>
               <a href="#0" className="button">
                 horror
@@ -38,40 +44,14 @@ const MovieDetails = ({ title }) => {
                 <div className="duration-area">
                   <div className="item">
                     <i className="fas fa-calendar-alt" />
-                    <span>06 Dec, 2020</span>
+                    <span>{movie.duration}</span>
                   </div>
                   <div className="item">
                     <i className="far fa-clock" />
                     <span>2 hrs 50 mins</span>
                   </div>
                 </div>
-                <ul className="social-share">
-                  <li>
-                    <a href="#0">
-                      <i className="fab fa-facebook-f" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#0">
-                      <i className="fab fa-twitter" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#0">
-                      <i className="fab fa-pinterest-p" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#0">
-                      <i className="fab fa-linkedin-in" />
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#0">
-                      <i className="fab fa-google-plus-g" />
-                    </a>
-                  </li>
-                </ul>
+             
               </div>
             </div>
           </div>
@@ -158,34 +138,7 @@ const MovieDetails = ({ title }) => {
                 </div>
                 <p>audience Score</p>
               </div>
-              <div className="item">
-                <div className="item-header">
-                  <h5 className="title">4.5</h5>
-                  <div className="rated">
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                  </div>
-                </div>
-                <p>Users Rating</p>
-              </div>
-              <div className="item">
-                <div className="item-header">
-                  <div className="rated rate-it">
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                    <i className="fas fa-heart" />
-                  </div>
-                  <h5 className="title">0.0</h5>
-                </div>
-                <p>
-                  <a href="#0">Rate It</a>
-                </p>
-              </div>
+            
             </div>
             <a href="/ticket-plan" className="custom-button">
               book tickets
@@ -205,12 +158,7 @@ const MovieDetails = ({ title }) => {
                   <li>
                     <a href="#0">2D</a>
                   </li>
-                  <li>
-                    <a href="#0">imax 2D</a>
-                  </li>
-                  <li>
-                    <a href="#0">4DX</a>
-                  </li>
+                
                 </ul>
               </div>
               <div className="widget-1 widget-offer">
@@ -392,25 +340,14 @@ const MovieDetails = ({ title }) => {
                 <div className="tab summery-review">
                   <ul className="tab-menu">
                     <li className="active">summery</li>
-                    <li>
-                      user review <span>147</span>
-                    </li>
+                    
                   </ul>
                   <div className="tab-area">
                     <div className="tab-item active">
                       <div className="item">
                         <h5 className="sub-title">Synopsis</h5>
                         <p>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Proin vehicula eros sit amet est tincidunt aliquet. Fusce
-                          laoreet ligula ac ultrices eleifend. Donec hendrerit
-                          fringilla odio, ut feugiat mi convallis nec. Fusce elit ex,
-                          blandit vitae mattis sit amet, iaculis ac elit. Ut diam
-                          mauris, viverra sit amet dictum vel, aliquam ac quam. Ut mi
-                          nisl, fringilla sit amet erat et, convallis porttitor
-                          ligula. Sed auctor, orci id luctus venenatis, dui dolor
-                          euismod risus, et pharetra orci lectus quis sapien. Duis
-                          blandit ipsum ac consectetur scelerisque.{" "}
+                         {movie.synopsis}{" "}
                         </p>
                       </div>
                       <div className="item">
@@ -424,88 +361,9 @@ const MovieDetails = ({ title }) => {
                               <i className="flaticon-double-right-arrows-angles" />
                             </div>
                           </div>
+                          
                         </div>
-                        <div className="casting-slider owl-carousel owl-loaded owl-drag">
-                          <div className="owl-stage-outer">
-                            <div
-                              className="owl-stage"
-                              style={{
-                                transform: "translate3d(-947px, 0px, 0px)",
-                                transition: "0.25s",
-                                width: 2843
-                              }}
-                            >
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast01.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">Bill Hader</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As Richie Tozier</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast02.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">nora hardy</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As raven</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast03.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">alvin peters</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As magneto</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
+                     <div> <div className="cast-item">
                                   <div className="cast-thumb">
                                     <a href="#0">
                                       <img
@@ -521,688 +379,41 @@ const MovieDetails = ({ title }) => {
                                     <span className="cate">actor</span>
                                     <p>As quicksilver</p>
                                   </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast01.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">Bill Hader</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As Richie Tozier</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast02.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">nora hardy</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As raven</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast03.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">alvin peters</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As magneto</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast04.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">josh potter</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As quicksilver</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast01.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">Bill Hader</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As Richie Tozier</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast02.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">nora hardy</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As raven</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast03.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">alvin peters</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As magneto</p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast04.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">josh potter</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As quicksilver</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="owl-nav disabled">
-                            <button
-                              type="button"
-                              role="presentation"
-                              className="owl-prev"
-                            >
-                              <span aria-label="Previous">‹</span>
-                            </button>
-                            <button
-                              type="button"
-                              role="presentation"
-                              className="owl-next"
-                            >
-                              <span aria-label="Next">›</span>
-                            </button>
-                          </div>
-                          <div className="owl-dots disabled" />
-                        </div>
+                                </div></div>
                       </div>
                       <div className="item">
                         <div className="header">
-                          <h5 className="sub-title">crew</h5>
+                          <h5 className="sub-title">Crew</h5>
                           <div className="navigation">
-                            <div className="cast-prev-2">
+                            <div className="cast-prev">
                               <i className="flaticon-double-right-arrows-angles" />
                             </div>
-                            <div className="cast-next-2">
+                            <div className="cast-next">
                               <i className="flaticon-double-right-arrows-angles" />
                             </div>
                           </div>
+                          
                         </div>
-                        <div className="casting-slider-two owl-carousel owl-loaded owl-drag">
-                          <div className="owl-stage-outer">
-                            <div
-                              className="owl-stage"
-                              style={{
-                                transform: "translate3d(-1184px, 0px, 0px)",
-                                transition: "0.25s",
-                                width: 2843
-                              }}
-                            >
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
+                     <div> <div className="cast-item">
                                   <div className="cast-thumb">
                                     <a href="#0">
                                       <img
-                                        src="./assets/images/cast/cast05.jpg"
+                                        src="./assets/images/cast/cast04.jpg"
                                         alt="cast"
                                       />
                                     </a>
                                   </div>
                                   <div className="cast-content">
                                     <h6 className="cast-title">
-                                      <a href="#0">pete warren</a>
+                                      <a href="#0">josh potter</a>
                                     </h6>
                                     <span className="cate">actor</span>
+                                    <p>As quicksilver</p>
                                   </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast06.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">howard bass</a>
-                                    </h6>
-                                    <span className="cate">executive producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast07.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">naomi smith</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast08.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">tom martinez</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast05.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">pete warren</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast06.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">howard bass</a>
-                                    </h6>
-                                    <span className="cate">executive producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast07.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">naomi smith</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast08.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">tom martinez</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned active"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast05.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">pete warren</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast06.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">howard bass</a>
-                                    </h6>
-                                    <span className="cate">executive producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast07.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">naomi smith</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                className="owl-item cloned"
-                                style={{ width: "136.875px", marginRight: 100 }}
-                              >
-                                <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast08.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">tom martinez</a>
-                                    </h6>
-                                    <span className="cate">producer</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="owl-nav disabled">
-                            <button
-                              type="button"
-                              role="presentation"
-                              className="owl-prev"
-                            >
-                              <span aria-label="Previous">‹</span>
-                            </button>
-                            <button
-                              type="button"
-                              role="presentation"
-                              className="owl-next"
-                            >
-                              <span aria-label="Next">›</span>
-                            </button>
-                          </div>
-                          <div className="owl-dots disabled" />
-                        </div>
+                                </div></div>
                       </div>
                     </div>
-                    <div className="tab-item">
-                      <div className="movie-review-item">
-                        <div className="author">
-                          <div className="thumb">
-                            <a href="#0">
-                              <img src="./assets/images/cast/cast02.jpg" alt="cast" />
-                            </a>
-                          </div>
-                          <div className="movie-review-info">
-                            <span className="reply-date">13 Days Ago</span>
-                            <h6 className="subtitle">
-                              <a href="#0">minkuk seo</a>
-                            </h6>
-                            <span>
-                              <i className="fas fa-check" /> verified review
-                            </span>
-                          </div>
-                        </div>
-                        <div className="movie-review-content">
-                          <div className="review">
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                          </div>
-                          <h6 className="cont-title">Awesome Movie</h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Integer volutpat enim non ante egestas vehicula.
-                            Suspendisse potenti. Fusce malesuada fringilla lectus
-                            venenatis porttitor.{" "}
-                          </p>
-                          <div className="review-meta">
-                            <a href="#0">
-                              <i className="flaticon-hand" />
-                              <span>8</span>
-                            </a>
-                            <a href="#0" className="dislike">
-                              <i className="flaticon-dont-like-symbol" />
-                              <span>0</span>
-                            </a>
-                            <a href="#0">Report Abuse</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="movie-review-item">
-                        <div className="author">
-                          <div className="thumb">
-                            <a href="#0">
-                              <img src="./assets/images/cast/cast04.jpg" alt="cast" />
-                            </a>
-                          </div>
-                          <div className="movie-review-info">
-                            <span className="reply-date">13 Days Ago</span>
-                            <h6 className="subtitle">
-                              <a href="#0">rudra rai</a>
-                            </h6>
-                            <span>
-                              <i className="fas fa-check" /> verified review
-                            </span>
-                          </div>
-                        </div>
-                        <div className="movie-review-content">
-                          <div className="review">
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                          </div>
-                          <h6 className="cont-title">Awesome Movie</h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Integer volutpat enim non ante egestas vehicula.
-                            Suspendisse potenti. Fusce malesuada fringilla lectus
-                            venenatis porttitor.{" "}
-                          </p>
-                          <div className="review-meta">
-                            <a href="#0">
-                              <i className="flaticon-hand" />
-                              <span>8</span>
-                            </a>
-                            <a href="#0" className="dislike">
-                              <i className="flaticon-dont-like-symbol" />
-                              <span>0</span>
-                            </a>
-                            <a href="#0">Report Abuse</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="movie-review-item">
-                        <div className="author">
-                          <div className="thumb">
-                            <a href="#0">
-                              <img src="./assets/images/cast/cast01.jpg" alt="cast" />
-                            </a>
-                          </div>
-                          <div className="movie-review-info">
-                            <span className="reply-date">13 Days Ago</span>
-                            <h6 className="subtitle">
-                              <a href="#0">rafuj</a>
-                            </h6>
-                            <span>
-                              <i className="fas fa-check" /> verified review
-                            </span>
-                          </div>
-                        </div>
-                        <div className="movie-review-content">
-                          <div className="review">
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                          </div>
-                          <h6 className="cont-title">Awesome Movie</h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Integer volutpat enim non ante egestas vehicula.
-                            Suspendisse potenti. Fusce malesuada fringilla lectus
-                            venenatis porttitor.{" "}
-                          </p>
-                          <div className="review-meta">
-                            <a href="#0">
-                              <i className="flaticon-hand" />
-                              <span>8</span>
-                            </a>
-                            <a href="#0" className="dislike">
-                              <i className="flaticon-dont-like-symbol" />
-                              <span>0</span>
-                            </a>
-                            <a href="#0">Report Abuse</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="movie-review-item">
-                        <div className="author">
-                          <div className="thumb">
-                            <a href="#0">
-                              <img src="./assets/images/cast/cast03.jpg" alt="cast" />
-                            </a>
-                          </div>
-                          <div className="movie-review-info">
-                            <span className="reply-date">13 Days Ago</span>
-                            <h6 className="subtitle">
-                              <a href="#0">bela bose</a>
-                            </h6>
-                            <span>
-                              <i className="fas fa-check" /> verified review
-                            </span>
-                          </div>
-                        </div>
-                        <div className="movie-review-content">
-                          <div className="review">
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                            <i className="flaticon-favorite-heart-button" />
-                          </div>
-                          <h6 className="cont-title">Awesome Movie</h6>
-                          <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Integer volutpat enim non ante egestas vehicula.
-                            Suspendisse potenti. Fusce malesuada fringilla lectus
-                            venenatis porttitor.{" "}
-                          </p>
-                          <div className="review-meta">
-                            <a href="#0">
-                              <i className="flaticon-hand" />
-                              <span>8</span>
-                            </a>
-                            <a href="#0" className="dislike">
-                              <i className="flaticon-dont-like-symbol" />
-                              <span>0</span>
-                            </a>
-                            <a href="#0">Report Abuse</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="load-more text-center">
-                        <a href="#0" className="custom-button transparent">
-                          load more
-                        </a>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
