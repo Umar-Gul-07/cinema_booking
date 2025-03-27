@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import (
     MovieListView, CinemaListView, ShowTimeListView,
-    EventListView, BookingListView
+    EventListView, BookingListView,MovieDetailView
 )
 
 urlpatterns = [
@@ -15,5 +15,7 @@ urlpatterns = [
     path('showtimes/', ShowTimeListView.as_view(), name='showtime-list'),
     path('events/', EventListView.as_view(), name='event-list'),
     path('bookings/', BookingListView.as_view(), name='booking-list'),
+    path('movies/<int:movie_id>/', MovieDetailView.as_view(), name='movie-detail'),
+
 
 ]

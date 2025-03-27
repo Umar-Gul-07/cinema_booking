@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const MovieDetails = ({ title }) => {
   const location = useLocation();
@@ -9,7 +9,6 @@ const MovieDetails = ({ title }) => {
   if (!movie) {
     return <h1>No Movie Data Available</h1>;
   }
-  console.log(movie)
   return (
     <div>
 
@@ -17,29 +16,28 @@ const MovieDetails = ({ title }) => {
 
       <section
         className="details-banner bg_img"
-        data-background="./assets/images/banner/banner03.jpg"
-        style={{ backgroundImage: 'url("./assets/images/banner/banner03.jpg")' }}
+        data-background={movie.background_image}
+        style={{ backgroundImage: `url("${movie.background_image}")` }}
       >
         <div className="container">
           <div className="details-banner-wrapper">
             <div className="details-banner-thumb">
-              <img src="./assets/images/movie/venus.jpg" alt="movie" />
-              <a
-                href="https://www.youtube.com/embed/KGeBMAgc46E"
+              <img src={movie.background_image} alt="movie" />
+              <Link to="https://www.youtube.com/embed/KGeBMAgc46E"
                 className="video-popup"
               >
                 <img src="./assets/images/movie/video-button.png" alt="movie" />
-              </a>
+              </Link>
             </div>
             <div className="details-banner-content offset-lg-3">
               <h3 className="title">{movie.title}</h3>
               <div className="tags">
-                <a href="#0">{movie.languages}</a>
-          
+                <Link to="#0">{movie.languages}</Link>
+
               </div>
-              <a href="#0" className="button">
+              <Link to="#0" className="button">
                 {movie.type}
-              </a>
+              </Link>
               <div className="social-and-duration">
                 <div className="duration-area">
                   <div className="item">
@@ -51,7 +49,7 @@ const MovieDetails = ({ title }) => {
                     <span>{movie.duration}</span>
                   </div>
                 </div>
-             
+
               </div>
             </div>
           </div>
@@ -64,12 +62,18 @@ const MovieDetails = ({ title }) => {
         <div className="container">
           <div className="book-wrapper offset-lg-3">
             <div className="left-side">
-              
-            
+
+
             </div>
-            <a href="/ticket-plan" className="custom-button">
-              book tickets
-            </a>
+            <Link
+              to={{
+                pathname: "/ticket-plan",
+              }}
+              state={{ movieId: movie.id }}
+              className="custom-button"
+            >
+              Book Tickets
+            </Link>
           </div>
         </div>
       </section>
@@ -81,11 +85,12 @@ const MovieDetails = ({ title }) => {
           <div className="row justify-content-center flex-wrap-reverse mb--50">
             <div className="col-lg-3 col-sm-10 col-md-6 mb-50">
               <div className="widget-1 widget-tags">
+                <h6 className='m-2'>Formats</h6>
                 <ul>
                   <li>
-                    <a href="#0">2D</a>
+                    <Link to="#0">{movie.formats}</Link>
                   </li>
-                
+
                 </ul>
               </div>
               <div className="widget-1 widget-offer">
@@ -97,7 +102,7 @@ const MovieDetails = ({ title }) => {
                     </div>
                     <div className="content">
                       <h6>
-                        <a href="#0">Amazon Pay Cashback Offer</a>
+                        <Link to="#0">Amazon Pay Cashback Offer</Link>
                       </h6>
                       <p>Win Cashback Upto Rs 300*</p>
                     </div>
@@ -108,7 +113,7 @@ const MovieDetails = ({ title }) => {
                     </div>
                     <div className="content">
                       <h6>
-                        <a href="#0">PayPal Offer</a>
+                        <Link to="#0">PayPal Offer</Link>
                       </h6>
                       <p>
                         Transact first time with Paypal and get 100% cashback up to
@@ -122,7 +127,7 @@ const MovieDetails = ({ title }) => {
                     </div>
                     <div className="content">
                       <h6>
-                        <a href="#0">HDFC Bank Offer</a>
+                        <Link to="#0">HDFC Bank Offer</Link>
                       </h6>
                       <p>
                         Get 15% discount up to INR 100* and INR 50* off on F&amp;B
@@ -134,152 +139,51 @@ const MovieDetails = ({ title }) => {
               </div>
               <div className="widget-1 widget-banner">
                 <div className="widget-1-body">
-                  <a href="#0">
+                  <Link to="#0">
                     <img
                       src="./assets/images/sidebar/banner/banner01.jpg"
                       alt="banner"
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
             <div className="col-lg-9 mb-50">
               <div className="movie-details">
-                <h3 className="title">photos</h3>
+                <h3 className="title">Photos</h3>
                 <div className="details-photos owl-carousel owl-loaded owl-drag">
                   <div className="owl-stage-outer">
-                    <div
-                      className="owl-stage"
-                      style={{
-                        transform: "translate3d(-877px, 0px, 0px)",
-                        transition: "1s",
-                        width: 1755
-                      }}
-                    >
-                      <div
-                        className="owl-item"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details01.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details01.jpg"
-                              alt="movie"
-                            />
-                          </a>
+                    <div className="owl-stage">
+                      {movie.images.map((image, index) => (
+                        <div key={index} className="owl-item ml-2" style={{ width: "250px", height: "250px" }}>
+                          <div className="thumb">
+                            <Link to={image.image} className="img-pop">
+                              <img src={image.image} alt={`movie-${index}`} />
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                      <div
-                        className="owl-item"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details02.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details02.jpg"
-                              alt="movie"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="owl-item"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details03.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details03.jpg"
-                              alt="movie"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="owl-item active"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details01.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details01.jpg"
-                              alt="movie"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="owl-item active"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details02.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details02.jpg"
-                              alt="movie"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div
-                        className="owl-item active"
-                        style={{ width: "262.5px", marginRight: 30 }}
-                      >
-                        <div className="thumb">
-                          <a
-                            href="./assets/images/movie/movie-details03.jpg"
-                            className="img-pop"
-                          >
-                            <img
-                              src="./assets/images/movie/movie-details03.jpg"
-                              alt="movie"
-                            />
-                          </a>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="owl-nav disabled">
-                    <button type="button" role="presentation" className="owl-prev">
-                      <span aria-label="Previous">‹</span>
-                    </button>
-                    <button type="button" role="presentation" className="owl-next">
-                      <span aria-label="Next">›</span>
-                    </button>
-                  </div>
-                  <div className="owl-dots disabled" />
                 </div>
+
                 <div className="tab summery-review">
                   <ul className="tab-menu">
                     <li className="active">summery</li>
-                    
+
                   </ul>
                   <div className="tab-area">
                     <div className="tab-item active">
+                      {/* Synopsis */}
                       <div className="item">
                         <h5 className="sub-title">Synopsis</h5>
-                        <p>
-                         {movie.synopsis}{" "}
-                        </p>
+                        <p>{movie.synopsis}</p>
                       </div>
+
+                      {/* Cast Section */}
                       <div className="item">
                         <div className="header">
-                          <h5 className="sub-title">cast</h5>
+                          <h5 className="sub-title">Cast</h5>
                           <div className="navigation">
                             <div className="cast-prev">
                               <i className="flaticon-double-right-arrows-angles" />
@@ -288,26 +192,33 @@ const MovieDetails = ({ title }) => {
                               <i className="flaticon-double-right-arrows-angles" />
                             </div>
                           </div>
-                          
                         </div>
-                     <div> <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast04.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">josh potter</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As quicksilver</p>
-                                  </div>
-                                </div></div>
+                        <div className="row">
+                          {movie.cast.map((member) => (
+                            <div key={member.id} className="col-md-3 col-sm-6 mb-3">
+                              <div className="cast-item">
+                                <div className="cast-thumb">
+                                  <Link to="#0">
+                                    <img
+                                      src={member.profile_image}
+                                      alt={member.name}
+                                      className="img-fluid"
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="cast-content">
+                                  <h6 className="cast-title">
+                                    <Link to="#0">{member.name}</Link>
+                                  </h6>
+                                  <span className="cate">{member.role}</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+
+                      {/* Crew Section */}
                       <div className="item">
                         <div className="header">
                           <h5 className="sub-title">Crew</h5>
@@ -319,29 +230,34 @@ const MovieDetails = ({ title }) => {
                               <i className="flaticon-double-right-arrows-angles" />
                             </div>
                           </div>
-                          
                         </div>
-                     <div> <div className="cast-item">
-                                  <div className="cast-thumb">
-                                    <a href="#0">
-                                      <img
-                                        src="./assets/images/cast/cast04.jpg"
-                                        alt="cast"
-                                      />
-                                    </a>
-                                  </div>
-                                  <div className="cast-content">
-                                    <h6 className="cast-title">
-                                      <a href="#0">josh potter</a>
-                                    </h6>
-                                    <span className="cate">actor</span>
-                                    <p>As quicksilver</p>
-                                  </div>
-                                </div></div>
+                        <div className="row">
+                          {movie.crew.map((member) => (
+                            <div key={member.id} className="col-md-3 col-sm-6 mb-3">
+                              <div className="cast-item">
+                                <div className="cast-thumb">
+                                  <Link to="#0">
+                                    <img
+                                      src={member.profile_image}
+                                      alt={member.name}
+                                      className="img-fluid"
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="cast-content">
+                                  <h6 className="cast-title">
+                                    <Link to="#0">{member.name}</Link>
+                                  </h6>
+                                  <span className="cate">{member.position}</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                    
                   </div>
+
                 </div>
               </div>
             </div>

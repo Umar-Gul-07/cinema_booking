@@ -14,12 +14,12 @@ class MovieImageSerializer(serializers.ModelSerializer):
 class CastSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cast
-        fields = ["id", "name", "role"]
+        fields = ["id", "name", "role","profile_image"]
 
 class CrewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crew
-        fields = ["id", "name", "position"]
+        fields = ["id", "name", "position","profile_image"]
 
 class MovieSerializer(serializers.ModelSerializer):
     images = MovieImageSerializer(many=True, read_only=True)
@@ -29,7 +29,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = ["id", "title", "synopsis", "release_date", "duration",
-                  "languages", "formats","background_image", "images", "cast", "crew"]
+                  "languages", "formats","type","background_image", "images", "cast", "crew"]
 
 # CINEMA & SCREEN SERIALIZERS
 class ScreenSerializer(serializers.ModelSerializer):

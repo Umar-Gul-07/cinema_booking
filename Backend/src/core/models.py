@@ -112,18 +112,3 @@ class ContactMessage(models.Model):
 class GalleryForm(models.Model):
     image = models.ImageField(upload_to='gallery/images', null=True, blank=True, help_text='Gallery Images')
 
-
-
-class Branch(models.Model):
-    """
-    Stores details about different branches.
-    """
-    name = models.CharField(max_length=255, unique=True)
-    address = models.TextField()
-    phone = models.CharField(max_length=20, unique=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
-    status = models.CharField(max_length=10, choices=[('Open', 'Open'), ('Closed', 'Closed')], default='Closed')
-    image = models.ImageField(upload_to='branch_images/', blank=True, null=True)
-
-    def __str__(self):
-        return self.name
