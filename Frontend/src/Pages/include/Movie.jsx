@@ -7,7 +7,7 @@ function Movie({movie}) {
             <div className="col-sm-6 col-lg-4">
                 <div className="movie-grid">
                     <div className="movie-thumb c-thumb">
-                        <Link to="/movie-details">
+                        <Link to="/movie-details" state={{ movie }}>
                             <img
                                 src={movie.background_image}
                                 alt="movie"

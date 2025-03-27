@@ -69,7 +69,7 @@ const TicketPlan = ({ title }) => {
                           <i className="far fa-heart" />
                           <i className="fas fa-heart" />
                         </div>
-                        <span className="name">{cinema.name}</span>
+                        <span className="name">Cinema : {cinema.name}</span>
                         <div className="location-icon">
                           <i className="fas fa-map-marker-alt" /> {cinema.location}
                         </div>
@@ -88,7 +88,7 @@ const TicketPlan = ({ title }) => {
                                   state={{ movieData: movieData,showtimeId:show.id }}  // Pass movieData here
 
                                 >
-                                  {show.screen.screen_number}
+                                 screen {show.screen.screen_number}
                                 </Link>
                               </div>
                             ))

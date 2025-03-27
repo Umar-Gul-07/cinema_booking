@@ -31,17 +31,35 @@ const SignUp = ({ title }) => {
         setLoading(true);
         setError('');
         setSuccess('');
-
+    
         try {
             const response = await api.post('/auth/registration/', formData, {
                 headers: { 'Content-Type': 'application/json' },
             });
-
+    
             setSuccess('Registration successful!');
-            toast.success("Registration successful! Please check your email.")
-            navigate("/sign-in")
+            toast.success("Registration successful! Please check your email.");
+            navigate("/sign-in");
         } catch (err) {
-            setError(err.response?.data?.message || 'Registration failed. Please try again.');
+            console.log(err);
+    
+            if (err.response?.status === 400) {
+                const errorData = err.response?.data;
+                let errorMessages = [];
+    
+                // Loop through all error fields
+                Object.keys(errorData).forEach((field) => {
+                    if (Array.isArray(errorData[field])) {
+                        errorMessages.push(...errorData[field]); // Push all messages
+                    } else {
+                        errorMessages.push(errorData[field]);
+                    }
+                });
+    
+                setError(errorMessages.join(' ')); // Join messages into one string
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
