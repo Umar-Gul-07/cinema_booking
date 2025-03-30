@@ -84,6 +84,7 @@ class Event(models.Model):
     date = models.DateField()
     time = models.TimeField()
     description = models.TextField()
+    image = models.ImageField(upload_to="movies/events/")
     ticket_price = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):

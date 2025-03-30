@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { Link } from "react-router-dom";
 import Movie from './include/Movie';
@@ -7,38 +6,46 @@ import api from '../Utils/Axios';
 
 const Movies = ({ title }) => {
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [filters, setFilters] = useState({
     language: [],
     format: [],
     genre: []
   });
 
-  // Fetch movies based on filters
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await api.get("/movies/", {
-          params: {
-            language: filters.language.join(","),
-            format: filters.format.join(","),
-            genre: filters.genre.join(","),
-          }
-        });
+        const response = await api.get("/movies/");
         setMovies(response.data);
+        setFilteredMovies(response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     };
 
     fetchMovies();
-  }, [filters]); // Runs when filters change
+  }, []);
 
-  // Handle checkbox change
+  useEffect(() => {
+    let filtered = movies;
+    if (filters.language.length > 0) {
+      filtered = filtered.filter(movie => filters.language.includes(movie.language));
+    }
+    if (filters.format.length > 0) {
+      filtered = filtered.filter(movie => filters.format.includes(movie.format));
+    }
+    if (filters.genre.length > 0) {
+      filtered = filtered.filter(movie => filters.genre.includes(movie.genre));
+    }
+    setFilteredMovies(filtered);
+  }, [filters, movies]);
+
   const handleFilterChange = (category, value) => {
     setFilters((prevFilters) => {
       const updatedCategory = prevFilters[category].includes(value)
-        ? prevFilters[category].filter((item) => item !== value) // Remove if exists
-        : [...prevFilters[category], value]; // Add if not exists
+        ? prevFilters[category].filter((item) => item !== value)
+        : [...prevFilters[category], value];
       
       return { ...prevFilters, [category]: updatedCategory };
     });
@@ -48,7 +55,6 @@ const Movies = ({ title }) => {
     <div>
       <Helmet><title>{title}</title></Helmet>
 
-      {/* Banner Section */}
       <section className="banner-section">
         <div className="banner-bg bg_img bg-fixed"
           style={{ backgroundImage: 'url("./assets/images/banner/banner02.jpg")' }}
@@ -63,7 +69,6 @@ const Movies = ({ title }) => {
         </div>
       </section>
 
-      {/* Search Section */}
       <section className="search-ticket-section padding-top pt-lg-0">
         <div className="container">
           <div className="search-tab bg_img"
@@ -79,12 +84,9 @@ const Movies = ({ title }) => {
         </div>
       </section>
 
-      {/* Movie Section with Filters */}
       <section className="movie-section padding-top padding-bottom">
         <div className="container">
           <div className="row flex-wrap-reverse justify-content-center">
-            
-            {/* Sidebar Filters */}
             <div className="col-sm-10 col-md-8 col-lg-3">
               <div className="widget-1 widget-check">
                 <div className="widget-header">
@@ -94,12 +96,12 @@ const Movies = ({ title }) => {
                   </Link>
                 </div>
                 <div className="widget-1-body">
-                  {/* Language Filter */}
                   <h6 className="subtitle">Language</h6>
                   {["English", "Hindi", "Spanish", "Tamil", "Telugu"].map(lang => (
                     <div className="form-group" key={lang}>
                       <input 
                         type="checkbox" 
+                        name={lang} 
                         checked={filters.language.includes(lang)}
                         onChange={() => handleFilterChange("language", lang)} 
                       />
@@ -107,12 +109,12 @@ const Movies = ({ title }) => {
                     </div>
                   ))}
 
-                  {/* Format Filter */}
                   <h6 className="subtitle">Experience</h6>
                   {["2D", "3D", "IMAX"].map(format => (
                     <div className="form-group" key={format}>
                       <input 
                         type="checkbox" 
+                        name={format} 
                         checked={filters.format.includes(format)}
                         onChange={() => handleFilterChange("format", format)} 
                       />
@@ -120,12 +122,12 @@ const Movies = ({ title }) => {
                     </div>
                   ))}
 
-                  {/* Genre Filter */}
                   <h6 className="subtitle">Genre</h6>
                   {["Action", "Comedy", "Drama", "Sci-Fi", "Horror"].map(genre => (
                     <div className="form-group" key={genre}>
                       <input 
                         type="checkbox" 
+                        name={genre} 
                         checked={filters.genre.includes(genre)}
                         onChange={() => handleFilterChange("genre", genre)} 
                       />
@@ -136,14 +138,13 @@ const Movies = ({ title }) => {
               </div>
             </div>
 
-            {/* Movie Listings */}
             <div className="col-lg-9 mb-50 mb-lg-0">
               <div className="filter-tab tab">
                 <div className="tab-area">
                   <div className="tab-item active">
                     <div className="row mb-10 justify-content-center">
-                      {movies.length > 0 ? (
-                        movies.map((movie) => (
+                      {filteredMovies.length > 0 ? (
+                        filteredMovies.map((movie) => (
                           <Movie key={movie.id} movie={movie} />
                         ))
                       ) : (
@@ -154,7 +155,6 @@ const Movies = ({ title }) => {
                 </div>
               </div>
 
-              {/* Pagination */}
               <div className="pagination-area text-center">
                 <Link to="#"><i className="fas fa-angle-double-left" /><span>Prev</span></Link>
                 <Link to="#">1</Link>
@@ -165,7 +165,6 @@ const Movies = ({ title }) => {
                 <Link to="#"><span>Next</span><i className="fas fa-angle-double-right" /></Link>
               </div>
             </div>
-
           </div>
         </div>
       </section>

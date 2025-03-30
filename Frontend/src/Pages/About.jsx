@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import TitleBar from './include/TitleBar'
+import { Link } from 'react-router-dom'
 
 const About = ({ title }) => {
     return (
@@ -27,9 +28,9 @@ const About = ({ title }) => {
                                         suspendisse ultrices gravida.Lorem ipsum dolor sit amet,
                                         consectetur adipiscing elit
                                     </p>
-                                    <a href="#0" className="custom-button">
+                                    <Link to="/movie" className="custom-button">
                                         book tickets
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

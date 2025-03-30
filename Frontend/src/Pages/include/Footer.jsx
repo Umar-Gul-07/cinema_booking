@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { Store } from '../../Utils/Store'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
+    const {state} = useContext(Store)
+    const {ContactInfo} = state
     return (
         <div>
             <footer className="footer-section">
@@ -28,35 +32,35 @@ const Footer = () => {
                 <div className="container">
                     <div className="footer-top">
                         <div className="logo">
-                            <a href="index-1.html">
+                            <Link to="/">
                                 <img src="./assets/images/footer/footer-logo.png" alt="footer" />
-                            </a>
+                            </Link>
                         </div>
                         <ul className="social-icons">
                             <li>
-                                <a href="#0">
+                                <Link to={ContactInfo.facebook}>
                                     <i className="fab fa-facebook-f" />
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#0" className="active">
+                                <Link to={ContactInfo.twitter} className="active">
                                     <i className="fab fa-twitter" />
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#0">
-                                    <i className="fab fa-pinterest-p" />
-                                </a>
+                                <Link to={ContactInfo.youtube}>
+                                    <i className="fab fa-youtube" />
+                                </Link>
                             </li>
                             <li>
-                                <a href="#0">
-                                    <i className="fab fa-google" />
-                                </a>
+                                <Link to={ContactInfo.linkedin}>
+                                    <i className="fab fa-linkedin" />
+                                </Link>
                             </li>
                             <li>
-                                <a href="#0">
+                                <Link to={ContactInfo.instagram}>
                                     <i className="fab fa-instagram" />
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -64,24 +68,24 @@ const Footer = () => {
                         <div className="footer-bottom-area">
                             <div className="left">
                                 <p>
-                                    Copyright © 2020.All Rights Reserved By <a href="#0">Boleto </a>
+                                    Copyright © 2020.All Rights Reserved By <Link to="#0">Boleto </Link>
                                 </p>
                             </div>
                             <ul className="links">
                                 <li>
-                                    <a href="#0">About</a>
+                                    <Link to="#0">About</Link>
                                 </li>
                                 <li>
-                                    <a href="#0">Terms Of Use</a>
+                                    <Link to="#0">Terms Of Use</Link>
                                 </li>
                                 <li>
-                                    <a href="#0">Privacy Policy</a>
+                                    <Link to="#0">Privacy Policy</Link>
                                 </li>
                                 <li>
-                                    <a href="#0">FAQ</a>
+                                    <Link to="#0">FAQ</Link>
                                 </li>
                                 <li>
-                                    <a href="#0">Feedback</a>
+                                    <Link to="#0">Feedback</Link>
                                 </li>
                             </ul>
                         </div>

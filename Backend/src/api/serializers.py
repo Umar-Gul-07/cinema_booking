@@ -66,7 +66,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ["id", "name", "movie", "cinema", "date", "time", "ticket_price"]
+        fields = ["id", "name", "movie","image", "cinema", "date", "time", "ticket_price"]
 
 # BOOKING SERIALIZER
 class BookingSerializer(serializers.ModelSerializer):

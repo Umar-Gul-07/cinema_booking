@@ -1,7 +1,7 @@
 const ContactInfo = {
-    contact_phone: "+923369430649",
-    contact_email: "zararanwar1234321@gmail.com",
-    address: "Abbottabad Khyber Pakhtun Khowa",
+    contact_phone: "+00000000000000",
+    contact_email: "abc@gmail.com",
+    address: "Street 11 F 16 ----",
     facebook: "https://facebook.com",
     twitter: "https://facebook.com",
     linkedin: "https://facebook.com",

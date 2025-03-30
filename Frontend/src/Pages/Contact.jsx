@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import TitleBar from './include/TitleBar'
 import { Helmet } from 'react-helmet'
+import { Store } from '../Utils/Store'
+import { Link } from 'react-router-dom'
 
-const Contact = ({title}) => {
+const Contact = ({ title }) => {
+    const { state } = useContext(Store)
+    const { ContactInfo } = state
     return (
         <div>
             <Helmet><title>{title}</title></Helmet>
-            <TitleBar title={title}/>
+            <TitleBar title={title} />
 
             <section className="contact-section padding-top">
                 <div className="contact-container">
@@ -91,8 +95,8 @@ const Contact = ({title}) => {
                                                 />
                                             </div>
                                             <div className="info-content">
-                                                <h6 className="title">phone number</h6>
-                                                <a href="Tel:82828282034">+1234 56789</a>
+                                                <h6 className="title">Phone number</h6>
+                                                <a href="Tel:82828282034">{ContactInfo.contact_phone}</a>
                                             </div>
                                         </div>
                                         <div className="info-item">
@@ -104,7 +108,7 @@ const Contact = ({title}) => {
                                             </div>
                                             <div className="info-content">
                                                 <h6 className="title">Email</h6>
-                                                <a href="Mailto:info@gmail.com">info@Boleto .com</a>
+                                                <Link to={`mailto:${ContactInfo.contact_email}`}>{ContactInfo.contact_email}</Link>
                                             </div>
                                         </div>
                                     </div>
