@@ -6,50 +6,30 @@ import api from '../Utils/Axios';
 
 const Movies = ({ title }) => {
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filters, setFilters] = useState({
-    language: [],
-    format: [],
-    genre: []
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const moviesPerPage = 6;
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await api.get("/movies/");
         setMovies(response.data);
-        setFilteredMovies(response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     };
-
     fetchMovies();
   }, []);
 
-  useEffect(() => {
-    let filtered = movies;
-    if (filters.language.length > 0) {
-      filtered = filtered.filter(movie => filters.language.includes(movie.language));
-    }
-    if (filters.format.length > 0) {
-      filtered = filtered.filter(movie => filters.format.includes(movie.format));
-    }
-    if (filters.genre.length > 0) {
-      filtered = filtered.filter(movie => filters.genre.includes(movie.genre));
-    }
-    setFilteredMovies(filtered);
-  }, [filters, movies]);
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleFilterChange = (category, value) => {
-    setFilters((prevFilters) => {
-      const updatedCategory = prevFilters[category].includes(value)
-        ? prevFilters[category].filter((item) => item !== value)
-        : [...prevFilters[category], value];
-      
-      return { ...prevFilters, [category]: updatedCategory };
-    });
-  };
+  const indexOfLastMovie = currentPage * moviesPerPage;
+  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const currentMovies = filteredMovies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const totalPages = Math.ceil(filteredMovies.length / moviesPerPage);
 
   return (
     <div>
@@ -79,6 +59,25 @@ const Movies = ({ title }) => {
                 <h6 className="category">Welcome to Boleto</h6>
                 <h3 className="title">What are you looking for?</h3>
               </div>
+              <div className="col-lg-12">
+                <div className="tab-area">
+                  <div className="tab-item active">
+                    <form className="ticket-search-form" onSubmit={(e) => e.preventDefault()}>
+                      <div className="form-group w-100">
+                        <input
+                          type="text"
+                          placeholder="Search for Movies"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <button type="submit">
+                          <i className="fas fa-search" />
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -87,68 +86,19 @@ const Movies = ({ title }) => {
       <section className="movie-section padding-top padding-bottom">
         <div className="container">
           <div className="row flex-wrap-reverse justify-content-center">
-            <div className="col-sm-10 col-md-8 col-lg-3">
-              <div className="widget-1 widget-check">
-                <div className="widget-header">
-                  <h5 className="m-title">Filter By</h5> 
-                  <Link to="#" onClick={() => setFilters({ language: [], format: [], genre: [] })}>
-                    Clear All
-                  </Link>
-                </div>
-                <div className="widget-1-body">
-                  <h6 className="subtitle">Language</h6>
-                  {["English", "Hindi", "Spanish", "Tamil", "Telugu"].map(lang => (
-                    <div className="form-group" key={lang}>
-                      <input 
-                        type="checkbox" 
-                        name={lang} 
-                        checked={filters.language.includes(lang)}
-                        onChange={() => handleFilterChange("language", lang)} 
-                      />
-                      <label>{lang}</label>
-                    </div>
-                  ))}
-
-                  <h6 className="subtitle">Experience</h6>
-                  {["2D", "3D", "IMAX"].map(format => (
-                    <div className="form-group" key={format}>
-                      <input 
-                        type="checkbox" 
-                        name={format} 
-                        checked={filters.format.includes(format)}
-                        onChange={() => handleFilterChange("format", format)} 
-                      />
-                      <label>{format}</label>
-                    </div>
-                  ))}
-
-                  <h6 className="subtitle">Genre</h6>
-                  {["Action", "Comedy", "Drama", "Sci-Fi", "Horror"].map(genre => (
-                    <div className="form-group" key={genre}>
-                      <input 
-                        type="checkbox" 
-                        name={genre} 
-                        checked={filters.genre.includes(genre)}
-                        onChange={() => handleFilterChange("genre", genre)} 
-                      />
-                      <label>{genre}</label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
             <div className="col-lg-9 mb-50 mb-lg-0">
               <div className="filter-tab tab">
                 <div className="tab-area">
                   <div className="tab-item active">
                     <div className="row mb-10 justify-content-center">
-                      {filteredMovies.length > 0 ? (
-                        filteredMovies.map((movie) => (
+                      {currentMovies.length > 0 ? (
+                        currentMovies.map((movie) => (
                           <Movie key={movie.id} movie={movie} />
                         ))
                       ) : (
-                        <p className='text-danger m-5'>No movies found.</p>
+                        <strong className='mb-5'>
+                          <p className='text-danger m-5'>No movies found.</p>
+                        </strong>
                       )}
                     </div>
                   </div>
@@ -156,13 +106,22 @@ const Movies = ({ title }) => {
               </div>
 
               <div className="pagination-area text-center">
-                <Link to="#"><i className="fas fa-angle-double-left" /><span>Prev</span></Link>
-                <Link to="#">1</Link>
-                <Link to="#">2</Link>
-                <Link to="#" className="active">3</Link>
-                <Link to="#">4</Link>
-                <Link to="#">5</Link>
-                <Link to="#"><span>Next</span><i className="fas fa-angle-double-right" /></Link>
+                <Link to="#" onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>
+                  <i className="fas fa-angle-double-left" /><span>Prev</span>
+                </Link>
+                {[...Array(totalPages)].map((_, index) => (
+                  <Link 
+                    key={index + 1} 
+                    to="#" 
+                    className={currentPage === index + 1 ? "active" : ""}
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </Link>
+                ))}
+                <Link to="#" onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>
+                  <span>Next</span><i className="fas fa-angle-double-right" />
+                </Link>
               </div>
             </div>
           </div>

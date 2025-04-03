@@ -13,6 +13,7 @@ import Blogs from "./Pages/Blogs";
 import Contact from "./Pages/Contact";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
+import History from "./Pages/History";
  
 
 
@@ -32,6 +33,7 @@ function App() {
                     <Route path='*' element={<PageNotFound404/>}/>
 
                  <Route path="/movie" element={<Base> <Movies title={"Movies"}/> </Base>}/>
+                 <Route path="/history" element={<Base> <History title={"History"}/> </Base>}/>
                  <Route path="/movie-details" element={<Base> <MovieDetails title={"Movie-Details"}/> </Base>}/>
                  <Route path="/ticket-plan" element={<Base> <TicketPlan title={"Ticket-Plan"}/> </Base>}/>
                  <Route path="/seat-plan" element={<Base> <SeatPlan title={"Seat-Plan"}/> </Base>}/>

@@ -2,11 +2,41 @@ import React, { useContext } from 'react'
 import TitleBar from './include/TitleBar'
 import { Helmet } from 'react-helmet'
 import { Store } from '../Utils/Store'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import api from '../Utils/Axios'
 
 const Contact = ({ title }) => {
     const { state } = useContext(Store)
     const { ContactInfo } = state
+    const navigate = useNavigate()
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Create a FormData object from the form and convert it to an object
+        const formData = new FormData(event.target);
+        const formObject = Object.fromEntries(formData.entries());
+
+        try {
+            // Send a POST request to the backend using Axios
+            const response = await api.post('/contact/', formObject);
+
+            if (response.status === 200) {
+                // Redirect to the thank-you page or show success message
+                toast.success("Submitted SuccessFully")
+                navigate("/")
+            } else {
+                // Handle unexpected status codes here
+                alert("Something went wrong");
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert("There was an error submitting the form. Please try again.");
+        }
+    };
+
+
     return (
         <div>
             <Helmet><title>{title}</title></Helmet>
@@ -30,59 +60,29 @@ const Contact = ({ title }) => {
                                         message below and we’ll respond as soon as possible.
                                     </p>
                                 </div>
-                                <form className="contact-form" id="contact_form_submit">
+                                <form onSubmit={handleSubmit} className="contact-form" id="contact_form_submit">
                                     <div className="form-group">
-                                        <label htmlFor="name">
-                                            Name <span>*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Your Full Name"
-                                            name="name"
-                                            id="name"
-                                            required=""
-                                        />
+                                        <label htmlFor="name">Name <span>*</span></label>
+                                        <input type="text" name="name" id="name" required />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="email">
-                                            Email <span>*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Your Email"
-                                            name="email"
-                                            id="email"
-                                            required=""
-                                        />
+                                        <label htmlFor="email">Email <span>*</span></label>
+                                        <input type="email" name="email" id="email" required />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="subject">
-                                            Subject <span>*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Your Subject"
-                                            name="subject"
-                                            id="subject"
-                                            required=""
-                                        />
+                                        <label htmlFor="subject">Subject <span>*</span></label>
+                                        <input type="text" name="subject" id="subject" required />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="message">
-                                            Message <span>*</span>
-                                        </label>
-                                        <textarea
-                                            name="message"
-                                            id="message"
-                                            placeholder="Enter Your Message"
-                                            required=""
-                                            defaultValue={""}
-                                        />
+                                        <label htmlFor="message">Message <span>*</span></label>
+                                        <textarea name="message" id="message" required />
                                     </div>
                                     <div className="form-group">
-                                        <input type="submit" defaultValue="Send Message" />
+                                        <input type="submit" value="Send Message" />
                                     </div>
                                 </form>
+
+
                             </div>
                             <div className="col-md-5 col-lg-6">
                                 <div className="padding-top padding-bottom contact-info">

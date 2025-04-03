@@ -1,4 +1,8 @@
 from django.db import models
+import stripe
+from django.conf import settings
+
+stripe.api_key = settings.STRIPE_SECRET_KEY  # Ensure this is set in settings.py
 
 # MOVIE MODELS
 class Movie(models.Model):
@@ -57,13 +61,29 @@ class Screen(models.Model):
     def __str__(self):
         return f"Screen {self.screen_number} - {self.cinema.name}"
 
+    def save(self, *args, **kwargs):
+        """ Override save method to auto-create seats when a screen is created """
+        is_new = self.pk is None  # Check if the screen is being created for the first time
+        super().save(*args, **kwargs)  # Save the screen first to get a valid ID
+        
+        if is_new:  
+            seats = []
+            for i in range(1, self.capacity + 1):
+                seat_number = f"S{i}"  # Example: S1, S2, ..., S100
+                seats.append(Seat(screen=self, seat_number=seat_number))
+            
+            Seat.objects.bulk_create(seats)  # Bulk insert seats for better performance
+
+
 class Seat(models.Model):
     screen = models.ForeignKey(Screen, on_delete=models.CASCADE, related_name="seats")
     seat_number = models.CharField(max_length=10)  # Example: A1, B5
     is_vip = models.BooleanField(default=False)
+    booked = models.BooleanField(default=False)  # ✅ Add this field
 
     def __str__(self):
         return f"Seat {self.seat_number} - {self.screen}"
+
 
 # SHOWTIMES (MOVIE SCREENING)
 class ShowTime(models.Model):
@@ -103,3 +123,23 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking for {self.customer_name} - {self.status}"
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} - {self.subject}"
+    
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='blogs/')
+    published_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

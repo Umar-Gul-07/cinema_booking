@@ -105,7 +105,7 @@ const Home = ({ title }) => {
                         <div className="tab-area">
                             <div className="tab-item active">
                                 <form className="ticket-search-form">
-                                    <div className="form-group ">
+                                    <div className="form-group w-100">
                                         <input type="text" placeholder="Search fo Movies" />
                                         <button type="submit">
                                             <i className="fas fa-search" />

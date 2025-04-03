@@ -2,7 +2,7 @@ from rest_framework import serializers
 from ..services.movies.models import (
     Movie, MovieImage, Cast, Crew,
     Cinema, Screen, Seat, ShowTime,
-    Event, Booking
+    Event, Booking, Blog
 )
 
 # MOVIE SERIALIZERS
@@ -78,3 +78,10 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ["id", "customer_name", "customer_email", "showtime",
                   "event", "seats", "total_price", "status", "booking_date"]
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Blog
+        fields = '__all__'

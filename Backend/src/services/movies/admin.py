@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Movie, MovieImage, Cast, Crew, 
     Cinema, Screen, Seat, ShowTime, 
-    Event, Booking
+    Event, Booking, ContactMessage,Blog
 )
 
 # MOVIE ADMIN
@@ -50,7 +50,7 @@ class CinemaAdmin(admin.ModelAdmin):
 
 @admin.register(Screen)
 class ScreenAdmin(admin.ModelAdmin):
-    list_display = ("cinema", "screen_number", "capacity")
+    list_display = ("id","cinema", "screen_number", "capacity")
     search_fields = ("cinema__name", "screen_number")
 
 # SEATS ADMIN
@@ -82,3 +82,16 @@ class BookingAdmin(admin.ModelAdmin):
     list_filter = ("status", "booking_date")
     filter_horizontal = ("seats",)  # Allows better seat selection
 
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'created_at')
+    search_fields = ('name', 'email', 'subject')
+    list_filter = ('created_at',)
+
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ['title', 'published_date']
+    search_fields = ['title']
