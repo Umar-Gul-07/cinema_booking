@@ -46,7 +46,7 @@ const SignIn = ({ title }) => {
 
         } catch (err) {
             console.log(err)
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            setError(err.response?.data?.message || 'Invalid Credentials');
         } finally {
             setLoading(false);
         }
